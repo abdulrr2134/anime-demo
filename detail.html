@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <meta charset="UTF-8" />
+  <title>Anime Detail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    header {
+      padding: 20px;
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    main {
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    #anime-image {
+      width: 300px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    #anime-description {
+      margin-top: 0;
+    }
+
+    #episode-list {
+      margin-top: 10px;
+    }
+
+    #episode-list button {
+      margin: 5px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #episode-list button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="anime-title">Loading...</h1>
+    <a href="index.html">⬅ Back to Home</a>
+  </header>
+
+  <main>
+    <img id="anime-image" src="" alt="Anime Poster" />
+    <div>
+      <p id="anime-description"></p>
+      <h2>Episodes</h2>
+      <div id="episode-list"></div>
+    </div>
+  </main>
+
+  <script>
+    const animeInfo = {
+      "Naruto": {
+        description: "Naruto Uzumaki is a young ninja who seeks recognition and dreams of becoming the Hokage.",
+        image: "https://m.media-amazon.com/images/I/812o8u5rX1L._UF1000,1000_QL80_.jpg",
+        episodes: 3
+      },
+      "One Piece": {
+        description: "Monkey D. Luffy sets out to become King of the Pirates and find the legendary One Piece.",
+        image: "https://images-cdn.ubuy.co.in/633ff1157e3fbc25557517c8-one-piece-poster-japanese-anime-posters.jpg",
+        episodes: 2
+      },
+      "Bleach": {
+        description: "Ichigo Kurosaki becomes a Soul Reaper to protect the living and the spirits of the dead.",
+        image: "https://i.pinimg.com/736x/8b/3e/9c/8b3e9c7953d6cdc568b288bdf25b4f10.jpg",
+        episodes: 2
+      },
+      "Attack on Titan": {
+        description: "Humans fight for survival against man-eating giants known as Titans.",
+        image: "https://i.pinimg.com/564x/4c/9c/49/4c9c49b94e4204085e23da2241c4194d.jpg",
+        episodes: 3
+      },
+      "Demon Slayer": {
+        description: "Tanjiro Kamado becomes a demon slayer to avenge his family and save his sister.",
+        image: "https://m.media-amazon.com/images/I/81kWkF-sbBL.jpg",
+        episodes: 2
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get("title");
+
+    if (!animeInfo[title]) {
+      // 🚫 Redirect if title not found
+      window.location.href = "index.html";
+    } else {
+      const info = animeInfo[title];
+      document.getElementById("anime-title").textContent = title;
+      document.getElementById("anime-image").src = info.image;
+      document.getElementById("anime-description").textContent = info.description;
+
+      const episodeList = document.getElementById("episode-list");
+      for (let i = 1; i <= info.episodes; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = `Episode ${i}`;
+        btn.onclick = () => {
+          window.location.href = `watch.html?title=${encodeURIComponent(title)}&ep=${i}`;
+        };
+        episodeList.appendChild(btn);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Watch Anime</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    header {
+      padding: 20px;
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    video {
+      width: 100%;
+      max-height: 80vh;
+      border-radius: 10px;
+      background: black;
+    }
+
+    .episode-buttons {
+      margin-top: 20px;
+    }
+
+    .episode-buttons button {
+      padding: 8px 12px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .episode-buttons button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="watch-title">Watching...</h1>
+    <a href="index.html">⬅ Back to Home</a>
+  </header>
+
+  <main>
+    <video controls>
+      <source id="video-source" src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="episode-buttons" id="episode-buttons"></div>
+  </main>
+
+  <script>
+    const videoData = {
+      "Naruto": [
+        "https://www.w3schools.com/html/mov_bbb.mp4",
+        "https://www.w3schools.com/html/movie.mp4",
+        "https://www.w3schools.com/html/mov_bbb.mp4"
+      ],
+      "One Piece": [
+        "https://www.w3schools.com/html/movie.mp4",
+        "https://www.w3schools.com/html/mov_bbb.mp4"
+      ],
+      "Bleach": [
+        "https://www.w3schools.com/html/movie.mp4",
+        "https://www.w3schools.com/html/mov_bbb.mp4"
+      ],
+      "Attack on Titan": [
+        "https://www.w3schools.com/html/movie.mp4",
+        "https://www.w3schools.com/html/mov_bbb.mp4",
+        "https://www.w3schools.com/html/movie.mp4"
+      ],
+      "Demon Slayer": [
+        "https://www.w3schools.com/html/mov_bbb.mp4",
+        "https://www.w3schools.com/html/movie.mp4"
+      ]
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get("title");
+    const ep = parseInt(params.get("ep") || "1");
+
+    const h1 = document.getElementById("watch-title");
+    const video = document.querySelector("video");
+    const source = document.getElementById("video-source");
+
+    if (title && videoData[title] && videoData[title][ep - 1]) {
+      h1.textContent = `Watching: ${title} - Episode ${ep}`;
+      source.src = videoData[title][ep - 1];
+      video.load();
+
+      // Save to localStorage for continue watching
+      const progress = { title, ep };
+      localStorage.setItem("continueWatching", JSON.stringify(progress));
+    } else {
+      h1.textContent = "Episode not found.";
+    }
+
+    // Render episode buttons
+    const episodeList = document.getElementById("episode-buttons");
+    if (title && videoData[title]) {
+      videoData[title].forEach((_, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = `Episode ${index + 1}`;
+        btn.onclick = () => {
+          window.location.href = `watch.html?title=${encodeURIComponent(title)}&ep=${index + 1}`;
+        };
+        episodeList.appendChild(btn);
+      });
+    }
+  </script>
+</body>
+</html>

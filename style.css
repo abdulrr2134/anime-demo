@@ -1,0 +1,132 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #111;
+  color: #fff;
+}
+
+header {
+  padding: 20px;
+  background-color: #222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#search {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+}
+
+/* ✅ FIXED: main is now normal flow, not grid */
+main {
+  padding: 20px;
+}
+
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.anime-card {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.anime-card:hover {
+  transform: scale(1.05);
+}
+
+.anime-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.anime-card h3 {
+  margin: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#continue-watching {
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  main {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  .anime-card img {
+    height: 180px;
+  }
+}
+#continue-list {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.continue-item {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+}
+/* 📱 Mobile layout improvements */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  #search {
+    width: 100%;
+  }
+
+  .anime-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .anime-card img {
+    height: 220px;
+  }
+
+  .continue-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .continue-item img {
+    width: 100%;
+    height: auto;
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  h1, h2, h3 {
+    font-size: 18px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
